@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddlewar',  # OPTIONAL: Add this if you want Admin panel CSS to work
     'whitenoise.middleware.WhiteNoiseMiddleware', # OPTIONAL: Add this if you want Admin panel CSS to work
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
