@@ -1,0 +1,16 @@
+# Security (Do not upload keys!)
+.env
+backend/.env
+.DS_Store
+
+# Python / Django
+backend/venv/
+backend/__pycache__/
+backend/*.sqlite3
+backend/staticfiles/
+
+# Node / Next.js
+frontend/frontend/node_modules/
+frontend/frontend/.next/
+frontend/frontend/out/
+frontend/frontend/.env.local
