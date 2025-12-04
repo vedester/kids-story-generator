@@ -1,36 +1,33 @@
 # backend/core/settings.py
 
 from pathlib import Path
-# Load environment variables
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-GOOGLE_API_KEY= os.getenv("GOOGLE_API_KEY")
+# Google API Key
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# --- CHANGE 1: SECRET KEY ---
+# Use an environment variable for safety. If not found, fall back to the insecure one (for local dev only)
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure--juk4!rk@7!3^1etnn^=2l*r7rdh888j4aw_q43!ka2+jdy$vw')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--juk4!rk@7!3^1etnn^=2l*r7rdh888j4aw_q43!ka2+jdy$vw'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+# --- CHANGE 2: DEBUG MODE ---
+# Keep False for production. (If you have issues, temporarily set to True to see errors)
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
-
-# CORS settings - Update this later!
-CORS_ALLOW_ALL_ORIGINS = True 
-
+# --- CHANGE 3: ALLOWED HOSTS ---
+# Only allow your specific Render URL and localhost
+ALLOWED_HOSTS = [
+    'kids-story-generator-backend.onrender.com', # Your Render URL (Check exact spelling!)
+    'localhost', 
+    '127.0.0.1'
+]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,15 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',  # Add DRF
-    'corsheaders',     # Add CORS
-
-    'stories',  # Your app for story generation
+    'rest_framework',
+    'corsheaders',
+    'stories',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-     'corsheaders.middleware.CorsMiddleware',  # Add CORS middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware', # OPTIONAL: Add this if you want Admin panel CSS to work
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,10 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -85,47 +78,29 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
 STATIC_URL = 'static/'
-
-
-# ADD THIS LINE:
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",  # React / HTML frontend
-# ]
+# OPTIONAL: Makes static files smaller and faster
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# --- CHANGE 4: CORS SETTINGS ---
+# Disable "Allow All" and only allow your Vercel Frontend
+CORS_ALLOW_ALL_ORIGINS = False 
+
+CORS_ALLOWED_ORIGINS = [
+    "https://kids-story-generator-five.vercel.app", # Your EXACT Vercel URL
+    "http://localhost:3000", # Keep this for local testing
+]
