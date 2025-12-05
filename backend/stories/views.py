@@ -61,7 +61,7 @@ def generate_story(request):
     #     "However, the live AI connection is currently paused pending project completion.\n\n"
     #     "**To the Client:** Once the payment is released, the AI will be instantly switched back on, and you will receive the full source code and admin rights.\n\n"
     #     "Thank you!""
-        "To access the AI story generaion,please pay the project fee.\n\n"
+        "To access the AI story generation,please pay the project fee.\n\n"
         "Once the payment is confirmed, the AI will be activated, and you will receive the full source code and admin rights.\n\n"
         "Thank you for your understanding!"
     )
