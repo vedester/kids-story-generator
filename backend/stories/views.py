@@ -55,32 +55,32 @@ def generate_story(request):
     if not prompt:
         return Response({"story": "Please tell me what the story should be about!"})
 
-    demo_message = (
-    #     "🔒 **PREVIEW MODE ACTIVE**\n\n"
-    #     "This system is fully functional and ready to generate stories!\n\n"
-    #     "However, the live AI connection is currently paused pending project completion.\n\n"
-    #     "**To the Client:** Once the payment is released, the AI will be instantly switched back on, and you will receive the full source code and admin rights.\n\n"
-    #     "Thank you!""
-        "To access the AI story generation,please pay the project fee.\n\n"
-        "Once the payment is confirmed, the AI will be activated, and you will receive the full source code and admin rights.\n\n"
-        "Thank you for your understanding!"
-    )
+    # demo_message = (
+    # #     "🔒 **PREVIEW MODE ACTIVE**\n\n"
+    # #     "This system is fully functional and ready to generate stories!\n\n"
+    # #     "However, the live AI connection is currently paused pending project completion.\n\n"
+    # #     "**To the Client:** Once the payment is released, the AI will be instantly switched back on, and you will receive the full source code and admin rights.\n\n"
+    # #     "Thank you!""
+    #     "To access the AI story generation,please pay the project fee.\n\n"
+    #     "Once the payment is confirmed, the AI will be activated, and you will receive the full source code and admin rights.\n\n"
+    #     "Thank you for your understanding!"
+    # )
     
-    return Response({"story": demo_message})    
+    # return Response({"story": demo_message})    
     
-    # try:
-    #     # CHANGE HERE: Use 'gemini-pro' instead of 'gemini-1.5-flash'
-    #     model = genai.GenerativeModel('gemini-2.5-flash')
+    try:
+        # CHANGE HERE: Use 'gemini-pro' instead of 'gemini-1.5-flash'
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
-    #     full_prompt = f"You are a friendly storyteller for children. Write a short story about: {prompt}"
+        full_prompt = f"You are a friendly storyteller for children. Write a short story about: {prompt}"
         
-    #     response = model.generate_content(full_prompt)
+        response = model.generate_content(full_prompt)
         
-    #     # Google returns the text in .text property
-    #     story = response.text
-    #     return Response({"story": story})
+        # Google returns the text in .text property
+        story = response.text
+        return Response({"story": story})
 
-    # except Exception as e:
-    #     # This prints the specific error to your terminal for debugging
-    #     print(f"Server Error: {str(e)}")
-    #     return Response({"story": "The magic storyteller is sleeping right now. Please try again!"})
+    except Exception as e:
+        # This prints the specific error to your terminal for debugging
+        print(f"Server Error: {str(e)}")
+        return Response({"story": "The magic storyteller is sleeping right now. Please try again!"})

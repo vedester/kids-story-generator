@@ -1,3 +1,4 @@
+
 # backend/test_google.py
 import google.generativeai as genai
 import os
@@ -17,3 +18,4 @@ try:
             print(f"- {m.name}")
 except Exception as e:
     print(f"Error: {e}")
+
